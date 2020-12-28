@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rider_app/Screens/login.dart';
 import 'package:rider_app/Screens/mainScreen.dart';
+import 'package:rider_app/Widgets/progressDialog.dart';
 import 'package:rider_app/main.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -149,11 +150,20 @@ class RegisterScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   registerNewUser(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(
+            message: "Registering, Please wait",
+          );
+        });
     final User firebaseUser = (await _firebaseAuth
             .createUserWithEmailAndPassword(
                 email: emailTextEditingController.text,
                 password: passwordTextEditingController.text)
             .catchError((errMsg) {
+      Navigator.pop(context);
       displayToastMsg('Error Message' + errMsg.toString(), context);
     }))
         .user;
@@ -174,6 +184,7 @@ class RegisterScreen extends StatelessWidget {
           context, MainScreen.idScreen, (route) => false);
     } else {
       // throw an error message
+      Navigator.pop(context);
       displayToastMsg("User has not been created.", context);
     }
   }
