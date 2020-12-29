@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginScreen.idScreen,
+      initialRoute: MainScreen.idScreen,
       routes: {
         RegisterScreen.idScreen: (context) => RegisterScreen(),
         LoginScreen.idScreen: (context) => LoginScreen(),
